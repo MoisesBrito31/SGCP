@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Moises Brito\\Documents\\Visual Studio 2019\\Projetos\\SGCP.Core\\SGCP.Core\\SGCP.Core.csproj": {}
+    "C:\\Users\\Moises Brito\\Documents\\GitHub\\SGCP\\SGCP.Core\\SGCP.Core.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Moises Brito\\Documents\\Visual Studio 2019\\Projetos\\SGCP.Core\\SGCP.Core\\SGCP.Core.csproj": {
+    "C:\\Users\\Moises Brito\\Documents\\GitHub\\SGCP\\SGCP.Core\\SGCP.Core.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Moises Brito\\Documents\\Visual Studio 2019\\Projetos\\SGCP.Core\\SGCP.Core\\SGCP.Core.csproj",
+        "projectUniqueName": "C:\\Users\\Moises Brito\\Documents\\GitHub\\SGCP\\SGCP.Core\\SGCP.Core.csproj",
         "projectName": "SGCP.Core",
-        "projectPath": "C:\\Users\\Moises Brito\\Documents\\Visual Studio 2019\\Projetos\\SGCP.Core\\SGCP.Core\\SGCP.Core.csproj",
+        "projectPath": "C:\\Users\\Moises Brito\\Documents\\GitHub\\SGCP\\SGCP.Core\\SGCP.Core.csproj",
         "packagesPath": "C:\\Users\\Moises Brito\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Moises Brito\\Documents\\Visual Studio 2019\\Projetos\\SGCP.Core\\SGCP.Core\\obj\\",
+        "outputPath": "C:\\Users\\Moises Brito\\Documents\\GitHub\\SGCP\\SGCP.Core\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Moises Brito\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -37,6 +37,24 @@
       },
       "frameworks": {
         "netcoreapp3.1": {
+          "dependencies": {
+            "Microsoft.AspNetCore.Authentication.Cookies": {
+              "target": "Package",
+              "version": "[2.2.0, )"
+            },
+            "Microsoft.Extensions.Logging.Debug": {
+              "target": "Package",
+              "version": "[3.1.0, )"
+            },
+            "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
+              "target": "Package",
+              "version": "[3.1.0, )"
+            },
+            "MySql.Data": {
+              "target": "Package",
+              "version": "[8.0.19, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",

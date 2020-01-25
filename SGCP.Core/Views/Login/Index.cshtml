@@ -1,0 +1,64 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
+            <div class="card card-signin my-5">
+                <div class="mx-auto my-4">
+                    <img src="~/Files/Imagens/logo.png" width="100" height="140" />
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title text-center">Login de Usuário</h5>
+                    <form class="form-signin">
+                        <div class="form-label-group">
+                            <label for="Nome">Usuário</label>
+                            <input type="text" name="Nome" id="Nome" class="form-control" style="max-width: 100%" placeholder="Usuário"
+                                   onclick="document.getElementById('falha').setAttribute('class', 'invisible');">
+                        </div>
+
+                        <div class="form-label-group mb-4">
+                            <label for="Senha">Password</label>
+                            <input type="password" name="Senha" id="Senha" class="form-control" style="max-width: 100%" placeholder="Senha"
+                                   onclick="document.getElementById('falha').setAttribute('class', 'invisible');">
+                        </div>
+
+                        <button type="button" id="butLogar" class="btn btn-lg btn-primary btn-block text-uppercase borde" onclick="criptografa();">Sign in</button>
+                        <div class="form-check mx-auto text-center my-1">
+                            <a href="#">Esqueci minha Senha</a>
+                        </div>
+                        <div id="falha" class="alert-danger mb-4 h-100 p-2 text-center invisible">
+                            Usuário ou senha incoretos
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script type="text/javascript">
+    window.onload = controle("@Model");
+</script>
+
+
+
+@if (ViewBag.banco == "conectado")
+{
+    <script type="text/javascript">
+        setTimeout(function () {
+            toastr.success("Banco de dados Online", "SGCP")
+        }, 100)
+    </script>
+}
+else
+{
+    <script type="text/javascript">
+    setTimeout(function() {
+        toastr.error("Falha no banco de Dados", "SGCP")
+    }, 100)
+    </script>
+}
