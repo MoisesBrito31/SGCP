@@ -5,10 +5,19 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="wwwroot\lib\toastr\css\**" />
+    <Content Remove="wwwroot\lib\toastr\css\**" />
+    <EmbeddedResource Remove="wwwroot\lib\toastr\css\**" />
+    <None Remove="wwwroot\lib\toastr\css\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Authentication.Cookies" Version="2.2.0" />
     <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="3.1.0" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.0" />
     <PackageReference Include="MySql.Data" Version="8.0.19" />
+    <PackageReference Include="Nancy.Authentication.Forms" Version="2.0.0" />
+    <PackageReference Include="toastr" Version="2.1.1" />
   </ItemGroup>
 
 

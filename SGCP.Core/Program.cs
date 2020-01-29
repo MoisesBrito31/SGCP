@@ -19,7 +19,7 @@ namespace SGCP.Core
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
            WebHost.CreateDefaultBuilder(args)
-           .UseUrls("https://*:5000;https://localhost:5000")           
+           //.UseUrls("https://*:5000;https://localhost:5000")           
            .UseSockets()
                .UseStartup<Startup>();
     }

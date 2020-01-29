@@ -53,6 +53,14 @@
             "MySql.Data": {
               "target": "Package",
               "version": "[8.0.19, )"
+            },
+            "Nancy.Authentication.Forms": {
+              "target": "Package",
+              "version": "[2.0.0, )"
+            },
+            "toastr": {
+              "target": "Package",
+              "version": "[2.1.1, )"
             }
           },
           "imports": [

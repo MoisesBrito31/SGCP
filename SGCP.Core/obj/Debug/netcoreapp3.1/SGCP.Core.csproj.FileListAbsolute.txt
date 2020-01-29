@@ -156,4 +156,3 @@ C:\Users\Moises Brito\Documents\GitHub\SGCP\SGCP.Core\bin\Debug\netcoreapp3.1\ru
 C:\Users\Moises Brito\Documents\GitHub\SGCP\SGCP.Core\bin\Debug\netcoreapp3.1\runtimes\win\lib\netstandard2.0\System.Security.Cryptography.ProtectedData.dll
 C:\Users\Moises Brito\Documents\GitHub\SGCP\SGCP.Core\bin\Debug\netcoreapp3.1\System.Security.Cryptography.Pkcs.dll
 C:\Users\Moises Brito\Documents\GitHub\SGCP\SGCP.Core\bin\Debug\netcoreapp3.1\runtimes\win\lib\netcoreapp2.1\System.Security.Cryptography.Pkcs.dll
-C:\Users\Moises Brito\Documents\GitHub\SGCP\SGCP.Core\obj\Debug\netcoreapp3.1\SGCP.Core.MvcApplicationPartsAssemblyInfo.cache

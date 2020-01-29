@@ -3,6 +3,8 @@
     ViewData["Title"] = "Index";
 }
 
+
+
 <div class="container">
     <div class="row">
         <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
@@ -20,12 +22,12 @@
                         </div>
 
                         <div class="form-label-group mb-4">
-                            <label for="Senha">Password</label>
+                            <label for="Senha">Senha</label>
                             <input type="password" name="Senha" id="Senha" class="form-control" style="max-width: 100%" placeholder="Senha"
                                    onclick="document.getElementById('falha').setAttribute('class', 'invisible');">
                         </div>
 
-                        <button type="button" id="butLogar" class="btn btn-lg btn-primary btn-block text-uppercase borde" onclick="criptografa();">Sign in</button>
+                        <button type="button" id="butLogar" class="btn btn-lg btn-primary btn-block text-uppercase borde" onclick="enviaLogin()">Sign in</button>
                         <div class="form-check mx-auto text-center my-1">
                             <a href="#">Esqueci minha Senha</a>
                         </div>
@@ -40,9 +42,7 @@
 </div>
 
 
-<script type="text/javascript">
-    window.onload = controle("@Model");
-</script>
+
 
 
 
@@ -50,15 +50,52 @@
 {
     <script type="text/javascript">
         setTimeout(function () {
+             toastr.options = {
+                 "closeButton": true,                 
+                 "positionClass": "toast-bottom-center",                 
+             }
             toastr.success("Banco de dados Online", "SGCP")
+
         }, 100)
     </script>
 }
 else
 {
     <script type="text/javascript">
-    setTimeout(function() {
-        toastr.error("Falha no banco de Dados", "SGCP")
-    }, 100)
+        setTimeout(function () {
+            toastr.options = {
+                 "closeButton": true,                 
+                 "positionClass": "toast-bottom-center",                 
+             }
+            toastr.error("Falha no banco de Dados", "SGCP")
+        }, 100)
     </script>
 }
+
+<script>
+    function enviaLogin() {
+        var usuario = document.getElementById("Nome").value
+        var senha = document.getElementById("Senha").value
+        var xhttp = new XMLHttpRequest();
+         xhttp.onreadystatechange = function () {
+        if (this.readyState === 4 && this.status === 200) {
+            var retorno = this.responseText;
+            switch (retorno) {
+                case "ok":
+                    window.location.href = "/Home/Index";
+                    break;
+                case "loginErro":
+                    document.getElementById("falha").setAttribute("class", "alert-danger mb-4 h-100 p-2 text-center visible");
+                    document.getElementById("butLogar").innerHTML = "Sign in";
+                    break;
+                default:
+                    document.body.innerHTML = retorno;
+                    break;
+            }
+
+        }
+    };
+    xhttp.open("POST", `/Login/Loga?usuario=${usuario}&senha=${senha}`, true);
+    xhttp.send();
+}
+</script>
