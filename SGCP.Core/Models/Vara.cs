@@ -11,6 +11,9 @@ namespace SGCP.Web.MVC.Models
         //atributos//
         public int id;
         private string nome;
+        public string juiz { get; set; }
+        public string estado { get; set; }
+        public string cidade { get; set; }
 
         //construtores//
         public vara()
@@ -29,6 +32,16 @@ namespace SGCP.Web.MVC.Models
         {
             id = _id;
             nome = _nome;
+        }
+
+        public vara(int _id, string _nome,string _juiz, string _cidade, string _estado)
+        {
+            id = _id;
+            nome = _nome;
+            cidade = _cidade;
+            estado = _estado;
+            juiz = _juiz;
+                
         }
 
         //controle de atributos//

@@ -1,0 +1,110 @@
+﻿@model IEnumerable<SGCP.Web.MVC.Models.Usuario>
+
+
+@{
+
+    ViewBag.Title = "Index";
+}
+
+
+
+<div class="container-fluid mt-5 pt-5">
+    <div class="row">
+        <div class="col ">
+            <h2 class="h2">Usuários</h2>
+        </div>
+        <div class="col text-right ">
+            <button class="btn btn-primary " onclick="window.location.href='/usuarios/add'">Novo Usuário</button>
+        </div>
+    </div>
+
+    <hr />
+    <div class="table-responsive container-fluid">
+        <table class="table">
+            <thead class="thead-dark">
+                <tr>
+                    <th>id</th>
+                    <th>Nome</th>
+                    <th>Tipo</th>
+                    <th class="text-right">Ação</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                @foreach (var usuario in Model)
+                {
+                    <tr id="@usuario.id">
+                        <th>@usuario.id</th>
+                        <th>@usuario.nome</th>
+                        @switch (usuario.nivel)
+                        {
+                            case 1:
+                                <th>Administrador</th>
+                                break;
+                            case 2:
+                                <th>Usuário</th>
+                                break;
+                            default:
+                                <th>Indefinido</th>
+                                break;
+
+                        }
+                        <th class="text-right">
+                            <button class="btn btn-primary" onclick="window.location.href='/usuarios/edit?id=@usuario.id'">editar</button>
+                            <button class="btn btn-danger " onclick="exclui(@usuario.id,'@usuario.nome');">excluir</button>
+                        </th>
+                    </tr>
+                }
+
+
+            </tbody>
+        </table>
+    </div>
+</div>
+<script type="text/javascript">
+
+    function exclui(id, usu) {
+        var resul = confirm(`Deseja Excluir de forma permanente o usuário:${usu}?`)
+        if (resul) {
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function () {
+                if (this.readyState === 4 && this.status === 200) {
+                    if (this.responseText=="ok") {
+                        document.getElementById(id).setAttribute("class", "invisible")
+                        document.getElementById(id).innerHTML = ""
+                        toastr.success("Operação executada com Sucesso", "SGCP")
+                    }
+                    else {
+                        toastr.error(this.responseText,"SGCP")
+                    }
+                }
+
+            }
+            xhttp.open("GET", "/usuarios/delete?id=" + id, true)
+            xhttp.send();
+        }
+    }
+
+    function edit(id) {
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+            if (this.readyState === 4 && this.status === 200) {
+                //window.location.reload()
+            }
+            xhttp.open("GET", `/usuarios/edit?id=${id}`, true)
+            xhttp.send();
+        }
+    }
+
+
+</script>
+
+
+@if (ViewBag.executo == "ok")
+{
+    <script type="text/javascript">
+        setTimeout(function () {
+            toastr.success("Operação executada com Sucesso", "SGCP")
+        }, 100)
+    </script>
+}

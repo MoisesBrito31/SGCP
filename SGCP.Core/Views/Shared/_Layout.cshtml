@@ -38,10 +38,10 @@
                 {
                     <ul class="navbar-nav mr-auto">
                         <li class="nav-item">
-                            <span class="navbar-text text-white mr-3" id="usuario">@ViewBag.nome</span>
+                            <span class="navbar-text text-white mr-3" id="usuario">Olá, @ViewBag.nome</span>
                         </li>
                         <li class="nav-item justify-content-end">
-                            <a class="nav-link" href="~/Login/Logout">Sair</a>
+                            <a class="nav-link" href="~/Login/Logout">[ Sair ]</a>
                         </li>
                     </ul>
                 }
@@ -54,12 +54,12 @@
         </div>
     </nav>
 
-    <div class="container-fluid mt-5">
+    <div class="container-fluid">
         @RenderBody()
     </div>
 
     <footer class="modal-footer">
-        <p class="text-center">&copy; @DateTime.Now.Year - SGCP Web</p>
+        <div class="m-auto">&copy; 2020 - SGCP Web</div>
     </footer>
 
 

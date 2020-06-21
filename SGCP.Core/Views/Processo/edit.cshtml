@@ -1,0 +1,173 @@
+﻿@model SGCP.Web.MVC.Models.processo
+
+
+@{
+    ViewBag.Title = "edit";
+}
+
+<style>
+    input {
+        max-width: 100%;
+    }
+
+    textarea {
+        max-width: 100%;
+    }
+</style>
+
+<div class="container-fluid mt-5 pt-5">
+    <div class="row">
+        <div class="col ">
+            <h2 class="h2">Processo Nº.: @Model.numero</h2>
+
+        </div>
+        <div class="col text-right">
+            <button class="btn btn-primary" type="button" onclick="document.location.href='/processo/relatorio'">Gerar Relatório</button>
+        </div>
+    </div>
+</div>
+
+<hr />
+
+<div class="container ">
+    <div class="row">
+        <div class="col m-1">
+            <div class="m-1 form-group my-2">
+                <label for="name">Numero do Processo</label>
+                <input type="text" class="form-control" id="numero" value="@Model.numero" />
+            </div>
+
+            <div class="m-1 form-group my-2">
+                <label for="name">Vara</label>
+                <div class="row">
+                    <div class="col">
+                        <select class="form-control" id="vara">
+                            @foreach (SGCP.Web.MVC.Models.vara vara in ViewBag.varas)
+                            {
+
+                                if (vara.id == Model.vara)
+                                {
+                                    <option selected
+                                            value="@vara.id">
+                                        @vara.get_nome()
+                                    </option>
+                                }
+                                else
+                                {
+                                    <option value="@vara.id">
+                                        @vara.get_nome()
+                                    </option>
+                                }
+                            }
+                        </select>
+                    </div>
+                    <div class="col ">
+                        <button class="btn btn-primary" type="button" onclick="window.location.href='/vara/index'">geranciar</button>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="m-1 form-group my-2">
+                <label for="name">Requerido</label>
+                <input type="text" class="form-control" id="rqrd" value="@Model.requerido" />
+            </div>
+
+            <div class="m-1 form-group my-2">
+                <label for="name">Inicio do Trabalho</label>
+                <input type="date" class="form-control" id="ini_tra" value="@Model.inicio_trabalho" />
+            </div>
+
+            <div class="m-1 form-group my-2">
+                <label for="name">Honorário Propósto</label>
+                <input type="text" class="form-control" id="HPro" value="@Model.honorario_pro" />
+            </div>
+
+            <div class="m-1 form-group my-2">
+                <label for="obs">Observações</label>
+                <textarea class="form-control" rows="4" id="obs">@Model.obs</textarea>
+            </div>
+
+        </div>
+        <div class="col m-1">
+            <div class="m-1 form-group my-2">
+                @if (Model.intimacao.Month.ToString().Length == 1) { ViewBag.mes = "0" + Model.intimacao.Month; }
+                else { ViewBag.mes = Model.intimacao.Month; }
+                @if (Model.intimacao.Day.ToString().Length == 1) { ViewBag.dia = "0" + Model.intimacao.Day; }
+                else { ViewBag.dia = Model.intimacao.Day; }
+                <label for="name">Data da Intimação</label>
+                <input class="form-control" type="date" id="intimacao" value="@string.Format("{0}-{1}-{2}",Model.intimacao.Year,ViewBag.mes,ViewBag.dia)" />
+            </div>
+            <div class="m-1 form-group my-2">
+                <label for="name">Requerente</label>
+                <input type="text" class="form-control" id="rqrt" value="@Model.requerente" />
+            </div>
+
+            <div class="m-1 form-group my-2">
+                <label for="name">Prazo:</label>
+                <input type="text" class="form-control" id="entrega" value="@Model.entrega" />
+            </div>
+
+            <div class="m-1 form-group my-2">
+                <label for="name">Honorário aprovado </label>
+                <input type="text" class="form-control" id="Hapro" value="@Model.honorario" />
+            </div>
+
+        </div>
+
+    </div>
+    <div class="row">
+        <div class="col  ">
+            <div class="form-group my-4 text-right">
+                <button type="button" class="btn btn-success " onclick="add()">Salvar</button>
+            </div>
+        </div>
+        <div class="col  ">
+            <div class="form-group my-4 text-left">
+                <button type="button" class="btn btn-danger " onclick="window.location.href='/processo/index'">Voltar</button>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+
+
+
+<script type="text/javascript">
+    function add() {
+
+        var vara = document.getElementById("vara").value
+        var numero = document.getElementById("numero").value
+        var intimacao = document.getElementById("intimacao").value
+        var rqrd = document.getElementById("rqrd").value
+        var rqrt = document.getElementById("rqrt").value
+        var obs = document.getElementById("obs").value
+        var ini_tra = document.getElementById("ini_tra").value
+        var HPro = document.getElementById("HPro").value
+        var Hapro = document.getElementById("Hapro").value
+        var entrega = document.getElementById("entrega").value
+
+        var xhp = new XMLHttpRequest()
+        xhp.onreadystatechange = function () {
+            if (this.readyState === 4 && this.status === 200) {
+                var re = this.responseText
+                if (re === "ok") {
+                    window.location.href = "/processo/index?execut=ok"
+                }
+                else {
+                    //document.getElementById("mens").innerHTML = re;
+                    toastr.error(re,"SGCP")
+                    //window.location.href = "/Falha/Index?mensage=" + re;
+                }
+            }
+        }
+        xhp.open("Post", `/processo/edit?_id=${@Model.id}&_vara=${vara}&_numero=${numero}
+&_intimacao=${intimacao}&_reqd=${rqrd}&_reqt=${rqrt}&_obs=${obs}&_ini_tra=${ini_tra}&_Hpro=${HPro}&_Hapro=${Hapro}&_entrega=${entrega}`);
+        xhp.send();
+    }
+
+
+
+</script>

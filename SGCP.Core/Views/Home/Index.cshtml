@@ -1,8 +1,33 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewBag.Title = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="jumbotron text-center">
+    <h1>Bem Vindo ao SGCP</h1>
+    <img class="img-fluid border-light m-4" src="~/Files/Imagens/logo.png" width="100" height="200" />
+    <p class="lead"><strong>SGCP</strong> - Sistema de Gerênciamento e Controle de Processos</p>
+    <p class="lead">
+        Seja bem vindo(a) ao Sistema de Controle e Gerencie seu processo, começe agora e tenha um bom trabalho
+    </p>
+
+</div>
+
+<div class="row">
+    <div class="col-md-4">
+        <h2>Gerenciamento de usuários</h2>
+        <p>
+            Caso tenha acesso de administrador, poderas criar e alterar dados de usuários
+        </p>
+        <p><a class="btn-link" href="~/usuarios/index">Acessar</a></p>
+    </div>
+    <div class="col-md-4">
+        <h2>Gerenciamento de Varas </h2>
+        <p>gerencie as varas cadastradas</p>
+        <p><a class="btn-link" href="~/Vara/Index">Acessar</a></p>
+    </div>
+    <div class="col-md-4">
+        <h2>Gerenciamento de Precessos</h2>
+        <p>gerencie todos os porcessos cadastrados no sistema.</p>
+        <p><a class="btn-link" href="~/Processo/Index">acessar</a></p>
+    </div>
 </div>

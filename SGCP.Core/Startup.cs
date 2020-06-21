@@ -26,11 +26,7 @@ namespace SGCP.Core
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-                .AddCookie(options =>
-                options.LoginPath="/Login/Index"
-                );
-            services.AddControllersWithViews();
+            services.AddControllersWithViews().AddRazorRuntimeCompilation();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -48,13 +44,9 @@ namespace SGCP.Core
             }
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-
+          
             app.UseRouting();
-
-            app.UseAuthorization();
-
-            app.UseAuthentication();
-
+           
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(

@@ -171,6 +171,30 @@ namespace SGCP.Web.MVC.Models
 
         }
 
+        public bool loginByEmail(string mail, string senha)
+        {
+
+            string funcao = string.Format("select * from tb_usuario where email='{0}' and senha='{1}';", mail, senha);
+
+            MySqlConnection conector = new MySqlConnection(conectionstring.ConnectionString);
+            MySqlCommand comando = new MySqlCommand(funcao, conector);
+
+            try
+            {
+                conector.Open();
+                MySqlDataReader data = comando.ExecuteReader();
+                data.Read();
+                string ab = data.GetString(1);
+                conector.Close();
+                return true;
+            }
+            catch (Exception ex)
+            { return false; }
+
+
+        }
+
+
         public Usuario GetUsuario(string us, string senha)
         {
             Usuario retorno = new Usuario();
@@ -199,6 +223,39 @@ namespace SGCP.Web.MVC.Models
             catch (Exception ex)
             {
                 status = "falha ao gravar\r\n" + ex.Message;                
+            }
+
+            return retorno;
+        }
+
+        public Usuario GetUsuarioByEmail(string _eMail, string senha)
+        {
+            Usuario retorno = new Usuario();
+
+            string funcao = string.Format("select * from tb_usuario where email='{0}' and senha='{1}';", _eMail, senha);
+
+            MySqlConnection conector = new MySqlConnection(conectionstring.ConnectionString);
+            MySqlCommand comando = new MySqlCommand(funcao, conector);
+
+            try
+            {
+                conector.Open();
+                MySqlDataReader data = comando.ExecuteReader();
+                while (data.Read())
+                {
+                    string id = data.GetString(0);
+                    string a = data.GetString(1);
+                    string b = data.GetString(2);
+                    string c = data.GetString(3);
+                    string d = data.GetString(4);
+                    retorno = new Usuario(Convert.ToInt16(id), a, b, c, Convert.ToInt16(d));
+                }
+                conector.Close();
+
+            }
+            catch (Exception ex)
+            {
+                status = "falha ao gravar\r\n" + ex.Message;
             }
 
             return retorno;
@@ -351,8 +408,11 @@ namespace SGCP.Web.MVC.Models
                 {
                     string id = data.GetString(0);
                     string a = data.GetString(1);
+                    string b = data.GetString(2);
+                    string c = data.GetString(3);
+                    string d = data.GetString(4);
 
-                    retorno = new vara(Convert.ToInt16(id), a);
+                    retorno = new vara(Convert.ToInt16(id), a,b,c,d);
 
                 }
                 conector.Close();
@@ -368,7 +428,7 @@ namespace SGCP.Web.MVC.Models
         }
         public bool insert_vara(vara vara)
         {
-            string func = string.Format("insert into tb_vara (nome) values('{0}');", vara.get_nome());
+            string func = string.Format("insert into tb_vara (nome,juiz,cidade,estado) values('{0}','{1}','{2}','{3}');", vara.get_nome(),vara.juiz,vara.cidade,vara.estado);
             MySqlConnection conec = new MySqlConnection(conectionstring.ConnectionString);
             MySqlCommand comando = new MySqlCommand(func, conec);
 
@@ -407,8 +467,8 @@ namespace SGCP.Web.MVC.Models
         }
         public bool update_vara(int id, vara vara)
         {
-            string func = string.Format("update tb_vara SET `nome`='{0}' " +
-               "where `id`={1};", vara.get_nome(), id);
+            string func = string.Format("update tb_vara SET `nome`='{0}',`juiz`='{2}',`cidade`='{3}',`estado`='{4}' " +
+               "where `id`={1};", vara.get_nome(), id,vara.juiz,vara.cidade,vara.estado);
 
             MySqlCommand comando = new MySqlCommand(func, conector);
 
@@ -441,8 +501,11 @@ namespace SGCP.Web.MVC.Models
                 {
                     string id = data.GetString(0);
                     string a = data.GetString(1);
+                    string b = data.GetString(2);
+                    string c = data.GetString(3);
+                    string d = data.GetString(4);
 
-                    conjunto.Add(new vara(Convert.ToInt16(id), a));
+                    conjunto.Add(new vara(Convert.ToInt16(id), a,b,c,d));
 
                 }
                 conector.Close();

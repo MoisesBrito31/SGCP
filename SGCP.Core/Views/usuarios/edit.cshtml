@@ -1,0 +1,90 @@
+﻿@model SGCP.Web.MVC.Models.Usuario
+
+@{
+    /**/
+
+    ViewBag.Title = "edit";
+}
+
+
+<div class="container mt-5 pt-5">
+    <div class="row">
+        <div class="col-sm-9 col-md-7 col-lg-5 mx-5">
+            <div class="card-body">
+                <h5 class="card-title">Cadastro de Usuário</h5>
+                <form>
+                    <div class="form-group mx-auto">
+                        <label for="name">Nome Completo</label>
+                        <input class="form-control" type="text" name="nome" id="nome" value="@Model.nome" />
+                    </div>
+                    <div class="form-group mx-auto">
+                        <label for="usua">Usuario</label>
+                        <input class="form-control" type="text" name="usua" id="usua" value="@Model.usuario" />
+                    </div>
+                    <div class="form-group mx-auto">
+                        <label for="senha">Senha</label>
+                        <input class="form-control" type="text" name="senha" id="password" value="@Model.senha" />
+                    </div>
+                    <div class="form-group mx-auto">
+                        <label for="email">E-mail</label>
+                        <input class="form-control" type="email" name="email" id="email" value="@Model.email" />
+                    </div>
+                    <div class="form-group mx-auto">
+                        <label for="nivel">Tipo</label>
+                        @if (Model.nivel == 1)
+                        {
+                            <select class="form-control" name="nivel" id="nivel">
+                                <option value="1" selected>administrador</option>
+                                <option value="2">usuario</option>
+                            </select>
+                        }
+                        else
+                        {
+                            <select class="form-control" name="nivel" id="nivel">
+                                <option value="1">administrador</option>
+                                <option value="2" selected>usuario</option>
+                            </select>
+                        }
+
+
+                    </div>
+
+                    <div class="form-group mx-auto">
+                        <button type="button" class="btn btn-success" onclick="edit()">Salvar</button>
+                        <button type="button" class="btn btn-danger" onclick="window.location.href='/usuarios/index'">voltar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    function edit() {
+
+                                    var _nome = document.getElementById("nome").value
+        var _user = document.getElementById("usua").value
+        var _email = document.getElementById("email").value
+        var _passeord = document.getElementById("password").value
+        var _nivel = document.getElementById("nivel").value
+        var xhp = new XMLHttpRequest()
+        xhp.onreadystatechange = function () {
+                                        if (this.readyState === 4 && this.status === 200) {
+                                            var re = this.responseText
+                                            if (re === "ok") {
+                                                window.location.href = "/usuarios/index?execut=ok"
+                }
+                                            else {
+                                                //document.getElementById("mens").innerHTML = re;
+                                                toastr.error(re,"SGCP")
+                                                //window.location.href = "/Falha/Index?mensage=" + re;
+                                            }
+                                        }
+                                    }
+        xhp.open("Post", `/usuarios/edit?id=${@Model.id}&nome=${_nome}&usuario=${_user}&senha=${_passeord}&email=${_email}&nivel=${_nivel}`);
+                                    xhp.send();
+                                }
+
+
+
+</script>

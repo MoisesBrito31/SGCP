@@ -1,0 +1,145 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+
+}
+
+
+
+@model SGCP.Web.MVC.Models.vara_processo
+
+
+
+<div class="container-fluid mt-5 pt-5">
+    <div class="row mb-1">
+        <div class="col form-inline">
+            <h2 class="h2 mr-3">Processos</h2>
+            <button class="btn btn-primary " onclick="window.location.href='/processo/add'">+</button>
+        </div>
+
+        <div class="col  form-inline justify-content-end ">
+            <input onkeyup="busca()" class="form-control" type="text" placeholder="buscar..." id="busca">
+            <!-- <button class="btn btn-info" onclick="busca()">buscar</button>-->
+        </div>
+    </div>
+
+    <hr />
+    <div class="table-responsive container-fluid">
+        <table class="table " id="tabela">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Vara</th>
+                    <th>Processo</th>
+                    <th>Intimação</th>
+                    <th>Situação</th>
+                    <th class="text-right">Ação</th>
+                </tr>
+            </thead>
+            <tbody id="tabela">
+
+                @foreach (var proc in Model.processos)
+                {
+                    <tr id="@proc.id">
+                        <th>
+                            @Model.getVara(proc.vara)
+                        </th>
+                        <th>@proc.numero</th>
+                        <th>@proc.intimacao.ToShortDateString()</th>
+                        <th>@proc.situacao</th>
+                        <th class="text-right">
+
+                            <button class="btn btn-secondary" onclick="window.location.href='/processo/edit?id=@proc.id'">Ver</button>
+                            <button class="btn btn-danger " onclick="exclui(@proc.id,'@proc.numero');">excluir</button>
+                        </th>
+                    </tr>
+                }
+
+
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+
+
+<script type="text/javascript">
+
+
+    function exclui(id, usu) {
+            var resul = confirm(`Deseja Excluir de forma permanente o Processo ${usu}?`)
+        if (resul) {
+                var xhttp = new XMLHttpRequest();
+                xhttp.onreadystatechange = function () {
+                    if (this.readyState === 4 && this.status === 200) {
+                        if (this.responseText == "ok") {
+                            document.getElementById(id).setAttribute("class", "invisible")
+                            document.getElementById(id).innerHTML = ""
+                            toastr.success("Operação executada com Sucesso", "SGCP")
+                        }
+                        else {
+                            toastr.error(this.responseText, "SGCP")
+                        }
+
+                    }
+                }
+            xhttp.open("GET", "/processo/delete?id=" + id, true)
+            xhttp.send();
+            }
+        }
+
+        function edit(id) {
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function () {
+                if (this.readyState === 4 && this.status === 200) {
+                    //window.location.reload()
+                }
+                xhttp.open("GET", `/processo/edit?id=${id}`, true)
+            xhttp.send();
+            }
+        }
+
+
+    function busca() {
+
+        var valor = document.getElementById("busca").value;
+        if (valor != null) {
+            var testo = "@ViewBag.tabela";
+            var jon = testo.replace(/(&quot\;)/g, "\"");
+            var tabela = JSON.parse(jon);
+
+
+            for (x = 0; x < tabela.length; x++) {
+
+                if (tabela[x].numero.indexOf(valor) != -1) {
+                    document.getElementById(tabela[x].id).setAttribute("style", "visibility:visible");
+                }
+                else {
+                    document.getElementById(tabela[x].id).setAttribute("style", "visibility:collapse");
+
+                }
+            }
+        }
+        else {
+            for (x = 0; x < tabela.length; x++) {
+
+                document.getElementById(tabela[x].id).setAttribute("style", "visibility:visible");
+            }
+        }
+    }
+
+
+
+
+</script>
+
+
+
+@if (ViewBag.executo == "ok")
+{
+    <script type="text/javascript">
+        setTimeout(function () {
+            toastr.success("Operação executada com Sucesso", "SGCP")
+        }, 100)
+    </script>
+}

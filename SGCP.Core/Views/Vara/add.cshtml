@@ -1,0 +1,67 @@
+﻿
+@{
+    ViewBag.Title = "add";
+}
+
+
+<div class="container mt-5 pt-5">
+    <div class="row">
+        <div class="col-sm-9 col-md-7 col-lg-5 mx-5">
+            <div class="card-body">
+                <h5 class="card-title">Cadastro de Vara</h5>
+                <form>
+                    <div class="form-group mx-auto">
+                        <label for="name">Nome da Vara</label>
+                        <input class="form-control" type="text" name="nome" id="nome" />
+                    </div>
+                    <div class="form-group mx-auto">
+                        <label for="name">Juiz:</label>
+                        <input class="form-control" type="text" name="juiz" id="juiz" />
+                    </div>
+                    <div class="form-group mx-auto">
+                        <label for="name">Cidade:</label>
+                        <input class="form-control" type="text" name="cidade" id="cidade" />
+                    </div>
+                    <div class="form-group mx-auto">
+                        <label for="name">Estado:</label>
+                        <input class="form-control" type="text" name="estado" id="estado" />
+                    </div>
+
+                    <div class="form-group mx-auto">
+                        <button type="button" class="btn btn-success" onclick="add()">Criar</button>
+                        <button type="button" class="btn btn-danger" onclick="window.location.href='/Vara/index'">voltar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    function add() {
+
+        var _nome = document.getElementById("nome").value
+        var _juiz = document.getElementById("juiz").value
+        var _cidade = document.getElementById("cidade").value
+        var _estade = document.getElementById("estado").value
+
+        var xhp = new XMLHttpRequest()
+        xhp.onreadystatechange = function () {
+            if (this.readyState === 4 && this.status === 200) {
+                var re = this.responseText
+                if (re === "ok") {
+                    window.location.href = "/Vara/index?execut=ok"
+                }
+                else {
+                    document.getElementById("mens").innerHTML = re;
+                    toastr.error(re,"SGCP")
+                    //window.location.href = "/Falha/Index?mensage=" + re;
+                }
+            }
+        }
+        xhp.open("Post", `/Vara/add?nome=${_nome}&juiz=${_juiz}&cidade=${_cidade}&estado=${_estade}`);
+        xhp.send();
+    }
+
+
+</script>

@@ -3,8 +3,6 @@
     ViewData["Title"] = "Index";
 }
 
-
-
 <div class="container">
     <div class="row">
         <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
@@ -16,8 +14,8 @@
                     <h5 class="card-title text-center">Login de Usuário</h5>
                     <form class="form-signin">
                         <div class="form-label-group">
-                            <label for="Nome">Usuário</label>
-                            <input type="text" name="Nome" id="Nome" class="form-control" style="max-width: 100%" placeholder="Usuário"
+                            <label for="Nome">E-Mail</label>
+                            <input type="text" name="Nome" id="Nome" class="form-control" style="max-width: 100%" placeholder="e-mail"
                                    onclick="document.getElementById('falha').setAttribute('class', 'invisible');">
                         </div>
 
@@ -49,6 +47,9 @@
 @if (ViewBag.banco == "conectado")
 {
     <script type="text/javascript">
+      
+
+
         setTimeout(function () {
              toastr.options = {
                  "closeButton": true,                 
@@ -80,19 +81,14 @@ else
          xhttp.onreadystatechange = function () {
         if (this.readyState === 4 && this.status === 200) {
             var retorno = this.responseText;
-            switch (retorno) {
-                case "ok":
-                    window.location.href = "/Home/Index";
-                    break;
-                case "loginErro":
-                    document.getElementById("falha").setAttribute("class", "alert-danger mb-4 h-100 p-2 text-center visible");
-                    document.getElementById("butLogar").innerHTML = "Sign in";
-                    break;
-                default:
-                    document.body.innerHTML = retorno;
-                    break;
+            if (retorno == "falha") {
+                 document.getElementById("falha").setAttribute("class", "alert-danger mb-4 h-100 p-2 text-center visible");
+                 document.getElementById("butLogar").innerHTML = "Sign in";
             }
-
+            else {
+                document.cookie="token="+retorno
+                 window.location.href = "/Home/Index";
+            }
         }
     };
     xhttp.open("POST", `/Login/Loga?usuario=${usuario}&senha=${senha}`, true);
